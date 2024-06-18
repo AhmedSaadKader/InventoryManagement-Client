@@ -1,0 +1,6 @@
+{
+  "appTitle": "pharmacy_inventory_management",
+  "@appTitle": {
+    "description": "The title of the application"
+  }
+}

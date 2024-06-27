@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
+import 'package:pharmacy_inventory_management/src/app_state.dart';
+import 'package:pharmacy_inventory_management/src/settings/settings_controller.dart';
+import 'package:provider/provider.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
@@ -8,6 +12,8 @@ class DashboardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final settingsController = context.watch<SettingsController>();
+    final appState = context.watch<ApplicationState>();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Pharmacy Dashboard'),
@@ -19,9 +25,19 @@ class DashboardScreen extends StatelessWidget {
               icon: const Icon(Icons.notifications)),
           IconButton(
               onPressed: () {
-                // Navigate to profile
+                context.push('/settings', extra: settingsController);
               },
-              icon: const Icon(Icons.account_circle))
+              icon: const Icon(Icons.settings)),
+          appState.loggedIn
+              ? IconButton(
+                  onPressed: () {
+                    // Navigate to profile
+                  },
+                  icon: const Icon(Icons.account_circle))
+              : ElevatedButton(
+                  onPressed: () => context.push('/sign-in'),
+                  child: null,
+                )
         ],
       ),
       body: const Padding(

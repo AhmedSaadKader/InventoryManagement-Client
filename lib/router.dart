@@ -29,6 +29,7 @@ final router = GoRouter(routes: [
       ),
       GoRoute(
           path: 'profile',
+          name: 'profile',
           builder: (context, state) {
             return ProfileScreen(providers: const [], actions: [
               SignedOutAction((context) {
@@ -38,6 +39,7 @@ final router = GoRouter(routes: [
           }),
       GoRoute(
         path: 'settings',
+        name: 'settings',
         builder: (context, state) {
           final settingsController = context.read<SettingsController>();
           return SettingsView(controller: settingsController);

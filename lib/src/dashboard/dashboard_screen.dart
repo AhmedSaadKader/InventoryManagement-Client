@@ -38,7 +38,7 @@ class DashboardScreen extends StatelessWidget {
                     if (choice == 'logout') {
                       await FirebaseAuth.instance.signOut();
                     } else if (choice == 'profile') {
-                      context.push('/profile');
+                      GoRouter.of(context).goNamed('profile');
                     }
                   },
                   itemBuilder: (BuildContext context) {

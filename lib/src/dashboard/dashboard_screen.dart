@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
@@ -29,14 +30,33 @@ class DashboardScreen extends StatelessWidget {
               },
               icon: const Icon(Icons.settings)),
           appState.loggedIn
-              ? IconButton(
-                  onPressed: () {
-                    // Navigate to profile
+              ? PopupMenuButton(
+                  tooltip: "Account options",
+                  position: PopupMenuPosition.under,
+                  icon: CircleAvatar(),
+                  onSelected: (choice) async {
+                    if (choice == 'logout') {
+                      await FirebaseAuth.instance.signOut();
+                    } else if (choice == 'profile') {
+                      context.push('/profile');
+                    }
                   },
-                  icon: const Icon(Icons.account_circle))
+                  itemBuilder: (BuildContext context) {
+                    return <PopupMenuEntry>[
+                      const PopupMenuItem(
+                        child: Text('Profile'),
+                        value: 'profile',
+                      ),
+                      const PopupMenuItem(
+                        child: Text('Logout'),
+                        value: 'logout',
+                      )
+                    ];
+                  },
+                )
               : ElevatedButton(
                   onPressed: () => context.push('/sign-in'),
-                  child: null,
+                  child: Text('Sign in'),
                 )
         ],
       ),
